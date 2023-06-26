@@ -1,0 +1,316 @@
+1.package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func countWords(s string) map[string]int {
+	words := strings.Fields(s) // Separa a string em palavras
+	counts := make(map[string]int)
+
+	for _, word := range words {
+		counts[word]++
+	}
+
+	return counts
+}
+
+func main() {
+	text := "O cachorro correu atrás do gato e o gato subiu na árvore"
+	wordCount := countWords(text)
+
+	fmt.Println("Contagem de palavras:")
+	for word, count := range wordCount {
+		fmt.Printf("%s: %d\n", word, count)
+	}
+}
+
+2.package main
+
+import "fmt"
+
+func mergeMaps(map1, map2 map[string]string) map[string]string {
+	mergedMap := make(map[string]string)
+
+	for key, value := range map1 {
+		mergedMap[key] = value
+	}
+
+	for key, value := range map2 {
+		mergedMap[key] = value
+	}
+
+	return mergedMap
+}
+
+func main() {
+	map1 := map[string]string{
+		"chave1": "valor1",
+		"chave2": "valor2",
+	}
+
+	map2 := map[string]string{
+		"chave2": "novo_valor2",
+		"chave3": "valor3",
+	}
+
+	merged := mergeMaps(map1, map2)
+
+	fmt.Println("Mapa combinado:")
+	for key, value := range merged {
+		fmt.Printf("%s: %s\n", key, value)
+	}
+}
+
+3.package main
+
+import "fmt"
+
+func sumMapValues(m map[string]int) int {
+	sum := 0
+
+	for _, value := range m {
+		sum += value
+	}
+
+	return sum
+}
+
+func main() {
+	myMap := map[string]int{
+		"a": 10,
+		"b": 20,
+		"c": 30,
+	}
+
+	total := sumMapValues(myMap)
+
+	fmt.Println("Soma dos valores:", total)
+}
+
+4.package main
+
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
+
+func sortString(str string) string {
+	s := strings.Split(str, "")
+	sort.Strings(s)
+	return strings.Join(s, "")
+}
+
+func findAnagrams(words []string) map[string][]string {
+	anagramMap := make(map[string][]string)
+
+	for _, word := range words {
+		sortedWord := sortString(strings.ToLower(word))
+
+		// Adiciona a palavra ao grupo de anagramas correspondente
+		anagramMap[sortedWord] = append(anagramMap[sortedWord], word)
+	}
+
+	return anagramMap
+}
+
+func main() {
+	wordList := []string{"listen", "silent", "elbow", "below", "state", "taste", "night", "thing"}
+
+	anagramGroups := findAnagrams(wordList)
+
+	fmt.Println("Grupos de palavras anagramas:")
+	for _, group := range anagramGroups {
+		fmt.Println(group)
+	}
+}
+
+5.package main
+
+import (
+	"fmt"
+)
+
+func charFrequency(str string) map[rune]int {
+	frequencyMap := make(map[rune]int)
+
+	for _, char := range str {
+		frequencyMap[char]++
+	}
+
+	return frequencyMap
+}
+
+func main() {
+	text := "hello world"
+
+	frequency := charFrequency(text)
+
+	fmt.Println("Frequência dos caracteres:")
+	for char, count := range frequency {
+		fmt.Printf("%c: %d\n", char, count)
+	}
+}
+
+6.package main
+
+import (
+	"fmt"
+)
+
+func mergeWordCounts(wordCounts []map[string]int) map[string]int {
+	result := make(map[string]int)
+
+	for _, countMap := range wordCounts {
+		for word, count := range countMap {
+			result[word] += count
+		}
+	}
+
+	return result
+}
+
+func main() {
+	wordCounts := []map[string]int{
+		{"hello": 2, "world": 1},
+		{"hello": 1, "go": 3},
+		{"world": 2, "go": 1},
+	}
+
+	mergedCounts := mergeWordCounts(wordCounts)
+
+	fmt.Println("Contagem de palavras combinadas:")
+	for word, count := range mergedCounts {
+		fmt.Printf("%s: %d\n", word, count)
+	}
+}
+
+7.package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func countLetters(word string) map[rune]int {
+	letterCount := make(map[rune]int)
+
+	for _, letter := range word {
+		letterCount[letter]++
+	}
+
+	return letterCount
+}
+
+func analyzeFrase(frase string) map[string]map[rune]int {
+	wordCount := make(map[string]map[rune]int)
+
+	words := strings.Fields(frase)
+
+	for _, word := range words {
+		letterCount := countLetters(word)
+		wordCount[word] = letterCount
+	}
+
+	return wordCount
+}
+
+func main() {
+	frase := "O rato roeu a roupa do rei de Roma"
+
+	wordCount := analyzeFrase(frase)
+
+	fmt.Println("Contagem de letras por palavra:")
+	for word, letterCount := range wordCount {
+		fmt.Printf("%s: %v\n", word, letterCount)
+	}
+}
+
+8.package main
+
+import (
+	"fmt"
+)
+
+func calculateExpenses(balances map[string]float64) map[string]float64 {
+	totalExpense := 0.0
+	for _, expense := range balances {
+		totalExpense += expense
+	}
+
+	averageExpense := totalExpense / float64(len(balances))
+
+	adjustedBalances := make(map[string]float64)
+	for name, expense := range balances {
+		adjustedBalance := expense - averageExpense
+		adjustedBalances[name] = adjustedBalance
+	}
+
+	return adjustedBalances
+}
+
+func main() {
+	expenses := map[string]float64{
+		"Alice":  100.0,
+		"Bob":    50.0,
+		"Charlie": 75.0,
+	}
+
+	adjustedBalances := calculateExpenses(expenses)
+
+	fmt.Println("Valor que cada pessoa deve receber ou pagar:")
+	for name, balance := range adjustedBalances {
+		fmt.Printf("%s: %.2f\n", name, balance)
+	}
+}
+
+9.package main
+
+import (
+	"fmt"
+)
+
+func fibonacciSequence(n int) map[int]int {
+	sequence := make(map[int]int)
+
+	sequence[0] = 0
+	if n > 0 {
+		sequence[1] = 1
+	}
+
+	for i := 2; ; i++ {
+		fibNum := sequence[i-1] + sequence[i-2]
+		if fibNum > n {
+			break
+		}
+		sequence[i] = fibNum
+	}
+
+	return sequence
+}
+
+func main() {
+	n := 100
+
+	fibSeq := fibonacciSequence(n)
+
+	fmt.Println("Sequência de Fibonacci até", n, ":")
+	for index, num := range fibSeq {
+		fmt.Printf("Fib(%d) = %d\n", index, num)
+	}
+}
+
+10.func countPairs(slice []int) map[[2]int]int {
+	frequency := make(map[[2]int]int)
+
+	for i := 0; i < len(slice)-1; i++ {
+		for j := i + 1; j < len(slice); j++ {
+			pair := [2]int{slice[i], slice[j]}
+			frequency[pair]++
+		}
+	}
+
+	return frequency
+}
